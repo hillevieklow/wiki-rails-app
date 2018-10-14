@@ -1,11 +1,12 @@
 class ArticlesController < ApplicationController
-  before_action :find_article, only: [:show]
+  before_action :require_logged_in
 
   def index
     @articles = Article.all.order("created_at DESC")
   end
 
   def show
+    find_article
   end
 
   def new
