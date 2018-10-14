@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  recources :articles
+  resources :articles
+  root 'application#welcome', as: :welcome
 end
