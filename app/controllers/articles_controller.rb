@@ -10,16 +10,39 @@ class ArticlesController < ApplicationController
   end
 
   def new
-    @article = Article.new()
+    @article = current_user.articles.build
+  end
+
+  def edit
+    find_article
+  end
+
+  def update
+    find_article
+    @article.update(article_params)
+    if @article.valid?
+      @article.save
+      redirect_to @article
+    else
+      render :edit
+    end
   end
 
   def create
-    @article = Article.create(article_params)
+    @article = current_user.articles.build(article_params)
+    # byebug
     if @article.valid?
+      @article.save
       redirect_to @article
     else
       render 'new'
     end
+  end
+
+  def destroy
+    find_article
+    @article.destroy
+    redirect_to user_path
   end
 
   private
