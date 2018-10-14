@@ -1,0 +1,5 @@
+<%= @articles.each do |article| %>
+  <h2><%= article.title %></h2>
+  <p>Published at <%=article.created_at.strftime('%b %d, %Y')  %></p>
+  <p><%=truncate(article.content, length: 200, omission: "... "){ link_to "Read More", article_path(article.id) } %></p>
+<% end %>
