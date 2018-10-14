@@ -1,1 +1,14 @@
-<h1>Hi <%= @user.name %></h1>
+<h1>Hi <%= @current_user.name %></h1>
+
+<% if @current_user.articles.count >= 1 %>
+  <h2>Your Wiki Articles: </h2>
+  <%= @current_user.articles.each do |article| %>
+    <h2><%= link_to article.title, article_path(article.id) %></h2>
+    <h4><%= link_to "Edit", edit_article_path(article.id) %></h4>
+    <h4><%= link_to "Delete", { :controller => 'articles',  :action=>"destroy", :id => article.id } , :method => :delete %></h4>
+    <p>Published at <%=article.created_at.strftime('%b %d, %Y')  %></p>
+    <p><%=truncate(article.content, length: 200, omission: "... "){ link_to "Read More", article_path(article.id) } %></p>
+  <% end %>
+<% else %>
+  <p>You haven't created any articles yet. </p> <%= link_to "Create a new Article", new_article_path %>
+<% end%>
