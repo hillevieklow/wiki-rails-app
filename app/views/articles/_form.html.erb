@@ -1,0 +1,9 @@
+<%= form_for article, url: {action: form_action, params: {id: article.id}} do |f|%>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <%= f.label :content %>
+  <%= f.text_area :content%>
+  <%= f.submit 'Create Article'%>
+<% end %>
+
+<!--- add a nicer looking texteditor for content eventually --->
