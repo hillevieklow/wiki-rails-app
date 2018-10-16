@@ -1,8 +1,9 @@
 class ArticlesController < ApplicationController
-  before_action :require_logged_in
+  before_action :require_logged_in, except: [:index, :show]
 
   def index
     @articles = Article.all.order("created_at DESC")
+    @categories = Category.sort_by(@sort_field)
   end
 
   def show
@@ -11,6 +12,7 @@ class ArticlesController < ApplicationController
 
   def new
     @article = current_user.articles.build
+    @categories = Category.all
   end
 
   def edit
@@ -43,6 +45,11 @@ class ArticlesController < ApplicationController
     find_article
     @article.destroy
     redirect_to user_path
+  end
+
+  def upvote
+    @article.update(:upvotes => @article.upvotes+1)
+    redirect_to article_path(@article.id)
   end
 
   private
