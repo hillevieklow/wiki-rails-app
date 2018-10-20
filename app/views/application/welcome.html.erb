@@ -1,4 +1,4 @@
-<h1>Welcome to Wiki</h1>
+<h1>Welcome to Wiki!</h1>
 <h3>Please <%= link_to "Log In", login_path %> or <%= link_to "Sign Up", new_user_path %> to continue</h3>
 
 <%= form_tag login_path do %>
@@ -7,4 +7,11 @@
   <%= label_tag :password %>
   <%= password_field_tag :password, @user.password %>
   <%= submit_tag "Sign in" %>
+<% end %>
+
+<h3>Latest Articles: </h3>
+<%= @articles.each do |article| %>
+  <h4><%= link_to article.title, article_path(article.id) %></h4>
+  <p>Published at <%=article.created_at.strftime('%b %d, %Y')  %></p>
+  <p><%=truncate(article.content, length: 200, omission: "... "){ link_to "Read More", article_path(article.id) } %></p>
 <% end %>
